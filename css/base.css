@@ -1,0 +1,19 @@
+/* Agna School — base styles (from the original design). */
+body{margin:0;background:#f3f4f6;font-family:'Manrope',system-ui,sans-serif;color:#1c1f24;-webkit-font-smoothing:antialiased}
+a{color:#2f6fde;text-decoration:none}a:hover{color:#1f55b3;text-decoration:underline}
+textarea,input,button,select{font-family:inherit}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+#boot{min-height:100vh;display:flex;align-items:center;justify-content:center}
+#boot div{width:56px;height:56px;border-radius:14px;background:#1c1f24;color:#fff;display:flex;align-items:center;justify-content:center;font:800 26px Manrope,system-ui,sans-serif}
+
+/* ---- Phone layout (the original design is desktop-only) ---- */
+.agna-topbar,.agna-backdrop{display:none}
+@media (max-width:820px){
+  .agna-topbar{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid #e6e8eb;padding:8px 12px}
+  .agna-rail{display:none !important}
+  .agna-side{position:fixed !important;left:0;top:0;z-index:70;transform:translateX(-105%);transition:transform .22s ease;box-shadow:0 0 40px rgba(0,0,0,.2)}
+  .agna-side.open{transform:none}
+  .agna-backdrop.open{display:block;position:fixed;inset:0;z-index:60;background:rgba(15,17,20,.45)}
+  .agna-mainwrap{padding:14px 12px 48px !important;gap:18px !important}
+}

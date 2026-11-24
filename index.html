@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agna School — Learn, share and try new things</title>
+<meta name="description" content="Agna School brings classwork, classmates and real-world skills together. Study chapter by chapter, share what you make, talk in voice rooms and explore Launchpad topics.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+<div id="root"><div id="boot"><div>A</div></div></div>
+<noscript><p style="text-align:center;padding:40px;font-family:sans-serif;">Agna School needs JavaScript turned on.</p></noscript>
+
+<!-- ===================== LANDING PAGE TEMPLATE ===================== -->
+<script type="text/x-template" id="tpl-landing">
+<sc-if value="{{ onLanding }}" hint-placeholder-val="{{ true }}">
+<div style="min-height:100vh;">
+
+  <header style="position:sticky;top:0;z-index:20;background:rgba(243,244,246,.92);backdrop-filter:blur(8px);border-bottom:1px solid #e6e8eb;">
+    <div style="max-width:1160px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#1c1f24;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;">A</div>
+        <div style="font-weight:800;font-size:18px;">Agna School</div>
+      </div>
+      <nav style="display:flex;gap:4px;flex:1;flex-wrap:wrap;">
+        <a href="#what" style="color:#3d434b;font-size:14px;font-weight:600;padding:8px 12px;border-radius:8px;text-decoration:none;" style-hover="background:#e6e8eb;color:#1c1f24;">What it does</a>
+        <a href="#how" style="color:#3d434b;font-size:14px;font-weight:600;padding:8px 12px;border-radius:8px;text-decoration:none;" style-hover="background:#e6e8eb;color:#1c1f24;">How it works</a>
+        <a href="#helps" style="color:#3d434b;font-size:14px;font-weight:600;padding:8px 12px;border-radius:8px;text-decoration:none;" style-hover="background:#e6e8eb;color:#1c1f24;">How it helps</a>
+      </nav>
+      <div style="display:flex;gap:8px;">
+        <button sc-camel-on-click="{{ openLogin }}" style="border:1px solid #d8dce2;background:#fff;color:#1c1f24;border-radius:22px;padding:9px 18px;font-size:14px;font-weight:700;cursor:pointer;" style-hover="background:#f7f8fa;">Log in</button>
+        <button sc-camel-on-click="{{ openSignup }}" style="border:none;background:#1c1f24;color:#fff;border-radius:22px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;" style-hover="background:#2f3439;">Get started</button>
+      </div>
+    </div>
+  </header>
+
+  <section style="max-width:1160px;margin:0 auto;padding:72px 24px 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:48px;align-items:center;">
+    <div style="display:flex;flex-direction:column;gap:22px;">
+      <div style="align-self:flex-start;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e6e8eb;border-radius:20px;padding:6px 12px 6px 6px;font-size:13px;font-weight:600;color:#3d434b;">
+        <span style="background:#e8effc;color:#1f55b3;border-radius:14px;padding:3px 9px;font-size:11px;font-weight:800;">For schools</span>Classwork, community and life skills in one place
+      </div>
+      <h1 style="font-size:clamp(38px,5.4vw,60px);line-height:1.05;font-weight:800;letter-spacing:-1.5px;margin:0;text-wrap:balance;">One place to learn, share and try new things.</h1>
+      <p style="font-size:18px;line-height:1.6;color:#3d434b;margin:0;max-width:520px;text-wrap:pretty;">Agna School brings your classwork, your classmates and your interests together. Study chapter by chapter, share what you make, talk in voice rooms, and explore real-world skills.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button sc-camel-on-click="{{ openSignup }}" style="border:none;background:#2f6fde;color:#fff;border-radius:26px;padding:15px 26px;font-size:16px;font-weight:800;cursor:pointer;" style-hover="background:#1f55b3;">Get started — it's free</button>
+        <button sc-camel-on-click="{{ google }}" style="display:flex;align-items:center;gap:10px;border:1px solid #d8dce2;background:#fff;color:#1c1f24;border-radius:26px;padding:14px 22px;font-size:15px;font-weight:700;cursor:pointer;" style-hover="background:#f7f8fa;">
+          <svg width="18" height="18" sc-camel-view-box="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"></path><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"></path><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"></path></svg>
+          Continue with Google
+        </button>
+      </div>
+      <div style="display:flex;gap:22px;flex-wrap:wrap;font-size:14px;color:#5b616a;padding-top:4px;">
+        <span><b style="color:#1c1f24;">6</b> subjects</span>
+        <span><b style="color:#1c1f24;">22</b> Launchpad topics</span>
+        <span><b style="color:#1c1f24;">Learn · Practice · Test</b> in every chapter</span>
+      </div>
+    </div>
+    <div style="position:relative;padding:0 0 40px 0;">
+      <div style="background:#fff;border:1px solid #e0e3e7;border-radius:16px;padding:8px;box-shadow:0 24px 60px rgba(28,31,36,.14);">
+        <div style="display:flex;gap:6px;padding:4px 6px 10px;"><span style="width:10px;height:10px;border-radius:50%;background:#e5484d;"></span><span style="width:10px;height:10px;border-radius:50%;background:#d4a24c;"></span><span style="width:10px;height:10px;border-radius:50%;background:#22c55e;"></span></div>
+        <img src="images/screenshots/home.jpg" alt="Agna School home feed" style="width:100%;display:block;border-radius:10px;">
+      </div>
+      <div style="position:absolute;right:-12px;bottom:0;width:52%;background:#fff;border:1px solid #e0e3e7;border-radius:14px;padding:6px;box-shadow:0 18px 40px rgba(28,31,36,.18);">
+        <img src="images/screenshots/lesson.jpg" alt="Linear Equations lesson" style="width:100%;display:block;border-radius:9px;">
+      </div>
+    </div>
+  </section>
+
+  <section id="what" style="max-width:1160px;margin:0 auto;padding:72px 24px;display:flex;flex-direction:column;gap:36px;">
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:640px;">
+      <div style="font-size:12px;font-weight:800;color:#2f6fde;letter-spacing:1px;text-transform:uppercase;">What it does</div>
+      <h2 style="font-size:clamp(30px,3.6vw,42px);line-height:1.12;font-weight:800;letter-spacing:-.8px;margin:0;text-wrap:balance;">Everything a student needs, without switching apps.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="4">
+        <div style="background:#fff;border:1px solid #e6e8eb;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;">
+          <div style="background:{{ f.tint }};padding:22px 22px 0;">
+            <img src="{{ f.img }}" alt="{{ f.title }}" style="width:100%;display:block;border-radius:10px 10px 0 0;border:1px solid #e0e3e7;border-bottom:none;box-shadow:0 -4px 20px rgba(0,0,0,.06);">
+          </div>
+          <div style="padding:22px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="width:10px;height:10px;border-radius:50%;background:{{ f.color }};"></span>
+              <span style="font-size:13px;font-weight:800;color:{{ f.color }};">{{ f.label }}</span>
+            </div>
+            <div style="font-size:21px;font-weight:800;">{{ f.title }}</div>
+            <div style="font-size:15px;line-height:1.55;color:#3d434b;text-wrap:pretty;">{{ f.body }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="how" style="background:#1c1f24;color:#fff;">
+    <div style="max-width:1160px;margin:0 auto;padding:80px 24px;display:flex;flex-direction:column;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:640px;">
+        <div style="font-size:12px;font-weight:800;color:#8fb3f5;letter-spacing:1px;text-transform:uppercase;">How it works</div>
+        <h2 style="font-size:clamp(30px,3.6vw,42px);line-height:1.12;font-weight:800;letter-spacing:-.8px;margin:0;text-wrap:balance;">Up and running in three steps.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;">
+        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+          <div style="background:#26292e;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;">
+            <div style="width:42px;height:42px;border-radius:50%;background:#fff;color:#1c1f24;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;">{{ st.n }}</div>
+            <div style="font-size:20px;font-weight:800;">{{ st.title }}</div>
+            <div style="font-size:15px;line-height:1.55;color:#c4c8ce;text-wrap:pretty;">{{ st.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="helps" style="max-width:1160px;margin:0 auto;padding:80px 24px;display:flex;flex-direction:column;gap:36px;">
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:640px;">
+      <div style="font-size:12px;font-weight:800;color:#2f6fde;letter-spacing:1px;text-transform:uppercase;">How it helps</div>
+      <h2 style="font-size:clamp(30px,3.6vw,42px);line-height:1.12;font-weight:800;letter-spacing:-.8px;margin:0;text-wrap:balance;">Built for students, useful for everyone around them.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px;">
+      <sc-for list="{{ audiences }}" as="au" hint-placeholder-count="3">
+        <div style="background:#fff;border:1px solid #e6e8eb;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px;">
+          <div style="align-self:flex-start;background:{{ au.tint }};color:{{ au.color }};border-radius:16px;padding:5px 12px;font-size:13px;font-weight:800;">{{ au.who }}</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <sc-for list="{{ au.points }}" as="pt" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;align-items:flex-start;">
+                <span style="width:20px;height:20px;border-radius:50%;background:{{ au.color }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">✓</span>
+                <span style="font-size:15px;line-height:1.5;">{{ pt }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1160px;margin:0 auto;padding:0 24px 80px;">
+    <div style="background:#2f6fde;color:#fff;border-radius:24px;padding:48px 40px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;">
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:560px;">
+        <h2 style="font-size:clamp(28px,3.4vw,38px);line-height:1.15;font-weight:800;letter-spacing:-.6px;margin:0;text-wrap:balance;">Ready to explore what you love?</h2>
+        <p style="font-size:16px;line-height:1.55;margin:0;color:#e8effc;">Sign in with your school Google account and you're in.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button sc-camel-on-click="{{ google }}" style="display:flex;align-items:center;gap:10px;border:none;background:#fff;color:#1c1f24;border-radius:26px;padding:15px 24px;font-size:15px;font-weight:800;cursor:pointer;" style-hover="background:#f1f3f5;">
+          <svg width="18" height="18" sc-camel-view-box="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"></path><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"></path><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"></path></svg>
+          Continue with Google
+        </button>
+        <button sc-camel-on-click="{{ openLogin }}" style="border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:26px;padding:14px 22px;font-size:15px;font-weight:700;cursor:pointer;" style-hover="background:rgba(255,255,255,.12);">Log in</button>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1160px;margin:0 auto;padding:0 24px 64px;">
+    <div style="background:#fff;border:1px solid #e6e8eb;border-radius:20px;padding:28px 30px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="width:60px;height:60px;border-radius:50%;background:#1c1f24;color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">D</div>
+      <div style="flex:1;min-width:220px;">
+        <div style="font-size:12px;font-weight:800;color:#6b7280;letter-spacing:.5px;text-transform:uppercase;">Made by</div>
+        <div style="font-size:20px;font-weight:800;margin-top:2px;">Divyanshu</div>
+        <div style="font-size:14px;line-height:1.5;color:#3d434b;margin-top:4px;text-wrap:pretty;">I designed and built Agna School so students can learn, connect and explore their interests in one simple, friendly place.</div>
+      </div>
+      <a href="https://www.linkedin.com/in/divyanshu-ux/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;background:#0a66c2;color:#fff;border-radius:24px;padding:12px 20px;font-size:14px;font-weight:800;text-decoration:none;" style-hover="background:#004182;color:#fff;text-decoration:none;">
+        <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.65 4.76 6.1V21h-4v-5c0-1.2-.02-2.73-1.66-2.73-1.67 0-1.92 1.3-1.92 2.64V21h-4z"></path></svg>
+        Connect on LinkedIn
+      </a>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid #e6e8eb;">
+    <div style="max-width:1160px;margin:0 auto;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:#6b7280;">
+      <div style="display:flex;align-items:center;gap:8px;"><div style="width:24px;height:24px;border-radius:7px;background:#1c1f24;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;">A</div>Agna School · 2026</div>
+      <div>Created by <a href="https://www.linkedin.com/in/divyanshu-ux/" target="_blank" rel="noopener" style="font-weight:700;">Divyanshu</a></div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ showModal }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ closeModal }}" style="position:fixed;inset:0;z-index:50;background:rgba(15,17,20,.55);display:flex;align-items:center;justify-content:center;padding:20px;">
+      <div sc-camel-on-click="{{ stop }}" style="width:100%;max-width:400px;background:#fff;border-radius:20px;padding:30px;display:flex;flex-direction:column;gap:18px;box-shadow:0 30px 80px rgba(0,0,0,.3);position:relative;">
+        <button sc-camel-on-click="{{ closeModal }}" title="Close" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border:none;border-radius:50%;background:#f3f4f6;color:#3d434b;font-size:18px;cursor:pointer;">×</button>
+        <div style="width:44px;height:44px;border-radius:12px;background:#1c1f24;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;">A</div>
+        <div>
+          <div style="font-size:24px;font-weight:800;">{{ modalTitle }}</div>
+          <div style="font-size:14px;color:#5b616a;margin-top:4px;">{{ modalSub }}</div>
+        </div>
+        <button sc-camel-on-click="{{ google }}" style="display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid #d8dce2;background:#fff;color:#1c1f24;border-radius:12px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;" style-hover="background:#f7f8fa;">
+          <svg width="18" height="18" sc-camel-view-box="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"></path><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"></path><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"></path></svg>
+          {{ googleLabel }}
+        </button>
+        <div style="display:flex;align-items:center;gap:12px;font-size:12px;color:#8a9099;"><span style="flex:1;height:1px;background:#e6e8eb;"></span>or use your school email<span style="flex:1;height:1px;background:#e6e8eb;"></span></div>
+        <form sc-camel-on-submit="{{ enter }}" style="display:flex;flex-direction:column;gap:10px;">
+          <sc-if value="{{ isSignup }}"><input type="text" autocomplete="name" value="{{ name }}" sc-camel-on-change="{{ onName }}" placeholder="Your name" style="border:1px solid #d8dce2;border-radius:12px;padding:13px 14px;font-size:15px;outline:none;" style-focus="border-color:#2f6fde;"></sc-if>
+          <input type="email" autocomplete="email" value="{{ email }}" sc-camel-on-change="{{ onEmail }}" placeholder="name@school.edu" style="border:1px solid #d8dce2;border-radius:12px;padding:13px 14px;font-size:15px;outline:none;" style-focus="border-color:#2f6fde;">
+          <input type="password" autocomplete="{{ pwAutocomplete }}" value="{{ password }}" sc-camel-on-change="{{ onPassword }}" placeholder="Password" style="border:1px solid #d8dce2;border-radius:12px;padding:13px 14px;font-size:15px;outline:none;" style-focus="border-color:#2f6fde;">
+          <sc-if value="{{ hasError }}"><div role="alert" style="font-size:13px;font-weight:600;color:#b42318;background:#fdecec;border-radius:10px;padding:9px 12px;">{{ error }}</div></sc-if>
+          <button type="submit" style="border:none;background:#1c1f24;color:#fff;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;" style-hover="background:#2f3439;">{{ submitLabel }}</button>
+        </form>
+        <div style="font-size:13px;color:#5b616a;text-align:center;">{{ switchText }} <a sc-camel-on-click="{{ switchMode }}" style="cursor:pointer;font-weight:700;">{{ switchLink }}</a></div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+</script>
+
+<!-- ===================== APP TEMPLATE ===================== -->
+<script type="text/x-template" id="tpl-app">
+<div style="display:flex;min-height:100vh;">
+  <sc-if value="{{ railSide }}" hint-placeholder-val="{{ false }}">
+  <aside class="agna-rail" style="width:68px;flex-shrink:0;background:#fff;border-right:1px solid #e6e8eb;display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0;position:sticky;top:0;height:100vh;">
+    <div style="width:36px;height:36px;border-radius:10px;background:#1c1f24;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;margin-bottom:14px;">A</div>
+    <button onClick="{{ nav.home.go }}" title="Home" style="width:46px;height:46px;border:none;border-radius:12px;background:{{ nav.home.bg }};color:#1c1f24;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#f3f4f6;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.home.stroke }}" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg></button>
+    <button onClick="{{ nav.classwork.go }}" title="Classwork" style="width:46px;height:46px;border:none;border-radius:12px;background:{{ nav.classwork.bg }};color:#1c1f24;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#f3f4f6;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.classwork.stroke }}" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"></path><path d="M5 17a3 3 0 0 1 3-3h11"></path></svg></button>
+    <button onClick="{{ nav.launchpad.go }}" title="Launchpad" style="width:46px;height:46px;border:none;border-radius:12px;background:{{ nav.launchpad.bg }};color:#1c1f24;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#f3f4f6;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.launchpad.stroke }}" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M15.5 8.5l-2 5-5 2 2-5z"></path></svg></button>
+    <button onClick="{{ nav.events.go }}" title="Events" style="width:46px;height:46px;border:none;border-radius:12px;background:{{ nav.events.bg }};color:#1c1f24;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#f3f4f6;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.events.stroke }}" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></button>
+    <button onClick="{{ nav.welcome.go }}" title="Welcome" style="width:46px;height:46px;border:none;border-radius:12px;background:{{ nav.welcome.bg }};color:#1c1f24;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#f3f4f6;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.welcome.stroke }}" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></button>
+    <div style="flex:1;"></div>
+    <button onClick="{{ expandSide }}" title="Show menu" style="width:46px;height:46px;border:none;border-radius:12px;background:transparent;color:#5b616a;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#f3f4f6;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16M13 10l2 2-2 2"></path></svg></button>
+  </aside>
+  </sc-if>
+  <sc-if value="{{ fullSide }}" hint-placeholder-val="{{ true }}">
+  <aside class="agna-side {{ drawerClass }}" onClick="{{ sideClick }}" style="width:244px;flex-shrink:0;background:#fff;border-right:1px solid #e6e8eb;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;">
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:20px 12px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:0 8px 22px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#1c1f24;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;">A</div>
+        <div style="font-weight:800;font-size:18px;">Agna School</div>
+        <sc-if value="{{ inLesson }}" hint-placeholder-val="{{ false }}"><button onClick="{{ collapseSide }}" title="Hide menu" style="margin-left:auto;width:34px;height:34px;border:none;border-radius:8px;background:transparent;color:#5b616a;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#f3f4f6;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16M15 10l-2 2 2 2"></path></svg></button></sc-if>
+      </div>
+      <nav style="display:flex;flex-direction:column;gap:2px;">
+        <button onClick="{{ nav.home.go }}" style="display:flex;align-items:center;gap:14px;width:100%;padding:11px 12px;border-radius:10px;border:none;background:{{ nav.home.bg }};font-size:15px;font-weight:{{ nav.home.weight }};color:#1c1f24;cursor:pointer;text-align:left;" style-hover="background:#f3f4f6;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.home.stroke }}" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+          <span style="flex:1;">Home</span>
+        </button>
+        <button onClick="{{ nav.classwork.go }}" style="display:flex;align-items:center;gap:14px;width:100%;padding:11px 12px;border-radius:10px;border:none;background:{{ nav.classwork.bg }};font-size:15px;font-weight:{{ nav.classwork.weight }};color:#1c1f24;cursor:pointer;text-align:left;" style-hover="background:#f3f4f6;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.classwork.stroke }}" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"></path><path d="M5 17a3 3 0 0 1 3-3h11"></path></svg>
+          <span style="flex:1;">Classwork</span>
+          <sc-if value="{{ hasDue }}" hint-placeholder-val="{{ false }}"><span style="min-width:22px;height:22px;border-radius:11px;background:#e5484d;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 6px;">{{ dueCount }}</span></sc-if>
+        </button>
+        <button onClick="{{ nav.launchpad.go }}" style="display:flex;align-items:center;gap:14px;width:100%;padding:11px 12px;border-radius:10px;border:none;background:{{ nav.launchpad.bg }};font-size:15px;font-weight:{{ nav.launchpad.weight }};color:#1c1f24;cursor:pointer;text-align:left;" style-hover="background:#f3f4f6;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.launchpad.stroke }}" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M15.5 8.5l-2 5-5 2 2-5z"></path></svg>
+          <span style="flex:1;">Launchpad</span>
+        </button>
+        <button onClick="{{ nav.events.go }}" style="display:flex;align-items:center;gap:14px;width:100%;padding:11px 12px;border-radius:10px;border:none;background:{{ nav.events.bg }};font-size:15px;font-weight:{{ nav.events.weight }};color:#1c1f24;cursor:pointer;text-align:left;" style-hover="background:#f3f4f6;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.events.stroke }}" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>
+          <span style="flex:1;">Events</span>
+        </button>
+        <button onClick="{{ nav.welcome.go }}" style="display:flex;align-items:center;gap:14px;width:100%;padding:11px 12px;border-radius:10px;border:none;background:{{ nav.welcome.bg }};font-size:15px;font-weight:{{ nav.welcome.weight }};color:#1c1f24;cursor:pointer;text-align:left;" style-hover="background:#f3f4f6;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ nav.welcome.stroke }}" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg>
+          <span style="flex:1;">Welcome</span>
+        </button>
+      </nav>
+      <div style="font-size:12px;font-weight:700;color:#6b7280;padding:24px 12px 8px;">Voice rooms</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <sc-for list="{{ voiceRows }}" as="v" hint-placeholder-count="4">
+          <div class="agna-close-menu" onClick="{{ v.join }}" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;background:{{ v.bg }};" style-hover="background:#f3f4f6;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"></path><path d="M16 9a4 4 0 0 1 0 6"></path></svg>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
+              <span style="font-size:14px;font-weight:{{ v.weight }};line-height:1.25;">{{ v.name }}</span>
+              <div style="display:flex;padding-left:6px;min-height:4px;">
+                <sc-for list="{{ v.faces }}" as="m" hint-placeholder-count="0"><span style="width:18px;height:18px;border-radius:50%;background:{{ m.color }};border:2px solid #fff;margin-left:-6px;color:#fff;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ m.initials }}</span></sc-for>
+              </div>
+            </div>
+            <span style="font-size:11px;font-weight:700;background:{{ v.btnBg }};color:{{ v.btnFg }};border-radius:12px;padding:4px 10px;">{{ v.btnLabel }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="flex-shrink:0;background:#f7f8fa;border-top:1px solid #e6e8eb;">
+      <sc-if value="{{ inVoice }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:10px 12px;border-bottom:1px solid #e6e8eb;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div onClick="{{ openCall }}" style="flex:1;min-width:0;cursor:pointer;">
+              <div style="font-size:11px;font-weight:700;color:#1e8a4c;">Voice Connected</div>
+              <div style="font-size:11px;color:#5b616a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ voiceName }} / Agna School</div>
+            </div>
+            <button onClick="{{ leave }}" title="Disconnect" style="width:30px;height:30px;border:none;border-radius:6px;background:transparent;color:#5b616a;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#eceef1;color:#e5484d;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 15c5-5 13-5 18 0l-2.5 2.5-3-1.5v-2.5a10 10 0 0 0-7 0V16l-3 1.5z"></path></svg></button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;">
+            <button onClick="{{ toggleCam }}" style="border:1px solid #e0e3e7;border-radius:6px;padding:6px;font-size:11px;font-weight:600;cursor:pointer;background:{{ side.camBg }};color:{{ side.camFg }};display:flex;align-items:center;justify-content:center;gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="M16 10l5-3v10l-5-3z"></path></svg>Video</button>
+            <button onClick="{{ togglePresent }}" style="border:1px solid #e0e3e7;border-radius:6px;padding:6px;font-size:11px;font-weight:600;cursor:pointer;background:{{ side.presBg }};color:{{ side.presFg }};display:flex;align-items:center;justify-content:center;gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>Screen</button>
+          </div>
+        </div>
+      </sc-if>
+      <div style="display:flex;align-items:center;gap:6px;padding:8px 10px;">
+        <div style="width:30px;height:30px;border-radius:50%;background:{{ me.color }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;">{{ me.initials }}<span style="position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:#22c55e;border:2px solid #f7f8fa;"></span></div>
+        <div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ me.name }}</div><div style="font-size:10px;color:#8a9099;">{{ statusLabel }}</div></div>
+        <button onClick="{{ toggleMute }}" title="Mute" style="width:30px;height:30px;border:none;border-radius:6px;background:transparent;color:{{ side.micFg }};cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#eceef1;">
+          <sc-if value="{{ muted }}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path><line x1="4" y1="4" x2="20" y2="20"></line></svg></sc-if>
+          <sc-if value="{{ unmuted }}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></sc-if>
+        </button>
+        <button onClick="{{ toggleDeafen }}" title="Deafen" style="width:30px;height:30px;border:none;border-radius:6px;background:transparent;color:{{ side.deafFg }};cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#eceef1;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"></path><rect x="3" y="14" width="4" height="6" rx="1.5"></rect><rect x="17" y="14" width="4" height="6" rx="1.5"></rect><sc-if value="{{ deafened }}" hint-placeholder-val="{{ false }}"><line x1="3" y1="3" x2="21" y2="21"></line></sc-if></svg>
+        </button>
+        <button onClick="{{ logout }}" title="Log out" style="width:30px;height:30px;border:none;border-radius:6px;background:transparent;color:#5b616a;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#eceef1;color:#e5484d;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"></path><path d="M10 17l-5-5 5-5"></path><path d="M5 12h11"></path></svg></button>
+      </div>
+    </div>
+  </aside>
+  </sc-if>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
+    <div class="agna-topbar">
+      <button onClick="{{ openMenu }}" title="Menu" style="width:40px;height:40px;border:none;border-radius:10px;background:transparent;color:#1c1f24;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#f3f4f6;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+      <div style="width:30px;height:30px;border-radius:8px;background:#1c1f24;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;">A</div>
+      <div style="font-weight:800;font-size:17px;flex:1;">Agna School</div>
+      <div style="width:32px;height:32px;border-radius:50%;background:{{ me.color }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ me.initials }}</div>
+    </div>
+    <div class="agna-backdrop {{ drawerClass }}" onClick="{{ closeMenu }}"></div>
+    <div class="agna-mainwrap" style="display:flex;gap:28px;padding:24px 24px 60px;justify-content:center;align-items:flex-start;flex-wrap:wrap;">
+      <main style="flex:1 1 {{ mainBasis }};max-width:{{ mainMax }};min-width:0;display:flex;flex-direction:column;gap:14px;">
+
+        <sc-if value="{{ isHighlights }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:14px;overflow-x:auto;padding:2px 2px 6px;">
+            <sc-for list="{{ storyRows }}" as="c" hint-placeholder-count="7">
+              <button onClick="{{ c.select }}" style="border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;width:74px;flex-shrink:0;padding:0;font-family:inherit;">
+                <div style="width:66px;height:66px;border-radius:50%;padding:3px;background:{{ c.ring }};">
+                  <div style="width:100%;height:100%;border-radius:50%;border:3px solid #f3f4f6;background:{{ c.color }};color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;">{{ c.initial }}</div>
+                </div>
+                <span style="font-size:12px;font-weight:{{ c.weight }};color:#1c1f24;max-width:74px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ c.short }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:38px;height:38px;border-radius:50%;background:{{ me.color }};color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ me.initials }}</div>
+              <textarea value="{{ draft }}" onChange="{{ onDraft }}" placeholder="Share something you made, or ask a question…" rows="2" style="flex:1;border:none;outline:none;resize:none;font-size:15px;color:#1c1f24;background:transparent;padding-top:8px;line-height:1.45;"></textarea>
+            </div>
+            <sc-if value="{{ hasDraftPhoto }}">
+              <div style="position:relative;align-self:flex-start;margin-left:50px;">
+                <img src="{{ draftPhoto }}" alt="Photo to post" style="display:block;max-width:220px;max-height:160px;border-radius:10px;border:1px solid #e6e8eb;">
+                <button onClick="{{ removePhoto }}" title="Remove photo" style="position:absolute;top:6px;right:6px;width:26px;height:26px;border:none;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font-size:15px;line-height:1;cursor:pointer;">×</button>
+              </div>
+            </sc-if>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid #f0f1f3;padding-top:12px;">
+              <input type="file" accept="image/*" id="agna-photo-input" onChange="{{ onPhoto }}" style="display:none;"><button onClick="{{ pickPhoto }}" style="border:none;background:{{ photoBtnBg }};border-radius:20px;padding:8px 14px;font-size:13px;font-weight:600;display:flex;gap:6px;align-items:center;cursor:pointer;color:#1c1f24;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-9 9"></path></svg>Photo</button>
+              <select value="{{ postCircle }}" onChange="{{ onPostCircle }}" style="border:none;background:#f3f4f6;border-radius:20px;padding:9px 12px;font-size:13px;font-weight:600;cursor:pointer;color:#1c1f24;">
+                <option value="">Choose a circle</option>
+                <sc-for list="{{ circleRows }}" as="c" hint-placeholder-count="0"><option value="{{ c.id }}">{{ c.name }}</option></sc-for>
+              </select>
+              <div style="flex:1;"></div>
+              <button onClick="{{ submitPost }}" style="border:none;border-radius:20px;padding:9px 24px;font-size:14px;font-weight:700;cursor:pointer;background:{{ postBtnBg }};color:{{ postBtnFg }};">Post</button>
+            </div>
+          </div>
+
+          <sc-if value="{{ hasFilter }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:#e8effc;border-radius:12px;padding:10px 14px;font-size:14px;">
+              <span>Showing posts from <b>{{ filterName }}</b></span>
+              <button onClick="{{ showAll }}" style="border:none;background:#fff;border-radius:20px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;color:#1c1f24;">Show all</button>
+            </div>
+          </sc-if>
+
+          <sc-for list="{{ postRows }}" as="p" hint-placeholder-count="2">
+            <article style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;">
+                <div style="width:38px;height:38px;border-radius:50%;background:{{ p.avatarColor }};color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ p.initials }}</div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:14px;font-weight:700;">{{ p.author }}</div>
+                  <div style="font-size:12px;color:#6b7280;margin-top:1px;">{{ p.meta }}</div>
+                </div>
+              </div>
+              <sc-if value="{{ p.hasImage }}" hint-placeholder-val="{{ true }}">
+                <div onDoubleClick="{{ p.like }}" style="aspect-ratio:4/3;background-color:{{ p.imageBg }};background-image:{{ p.image }};background-size:cover;background-position:center;cursor:pointer;"></div>
+              </sc-if>
+              <div style="display:flex;align-items:center;gap:6px;padding:8px 8px 0;">
+                <button onClick="{{ p.like }}" title="Like" style="border:none;background:none;cursor:pointer;padding:6px;display:flex;color:{{ p.heartStroke }};"><svg width="26" height="26" viewBox="0 0 24 24" fill="{{ p.heartFill }}" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.6-4.6-9.6-9.3C1 7.9 3.2 4.5 6.7 4.5c2.1 0 3.6 1.2 5.3 3.2 1.7-2 3.2-3.2 5.3-3.2 3.5 0 5.7 3.4 4.3 6.7-2 4.7-9.6 9.3-9.6 9.3z"></path></svg></button>
+                <button onClick="{{ p.focusComment }}" title="Comment" style="border:none;background:none;cursor:pointer;padding:6px;display:flex;color:#1c1f24;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1-4.4A8.5 8.5 0 1 1 20.5 12z"></path></svg></button>
+                <div style="flex:1;"></div>
+                <button onClick="{{ p.save }}" title="Save" style="border:none;background:none;cursor:pointer;padding:6px;display:flex;color:#1c1f24;"><svg width="26" height="26" viewBox="0 0 24 24" fill="{{ p.saveFill }}" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17l-6-4.5-6 4.5z"></path></svg></button>
+              </div>
+              <div style="padding:2px 14px 0;font-size:14px;font-weight:700;">{{ p.likesLabel }}</div>
+              <div style="padding:4px 14px 0;font-size:14px;line-height:1.5;text-wrap:pretty;"><b>{{ p.author }}</b> {{ p.body }}</div>
+              <div style="display:flex;flex-direction:column;gap:4px;padding:6px 14px 0;">
+                <sc-for list="{{ p.comments }}" as="cm" hint-placeholder-count="0">
+                  <div style="font-size:14px;line-height:1.45;"><b>{{ cm.author }}</b> {{ cm.text }}</div>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;border-top:1px solid #f0f1f3;margin-top:12px;padding:10px 14px;">
+                <input id="{{ p.inputId }}" value="{{ p.draft }}" onChange="{{ p.onDraft }}" onKeyDown="{{ p.onKey }}" placeholder="Add a comment…" style="flex:1;border:none;outline:none;background:transparent;font-size:14px;padding:4px 0;"></input>
+                <button onClick="{{ p.send }}" style="border:none;background:none;cursor:pointer;font-size:14px;font-weight:700;color:{{ p.sendColor }};padding:4px;">Post</button>
+              </div>
+            </article>
+          </sc-for>
+        </sc-if>
+
+        <sc-if value="{{ isAssignments }}" hint-placeholder-val="{{ false }}">
+          <div style="font-weight:800;font-size:24px;">Classwork</div>
+          <button onClick="{{ openLesson }}" style="display:flex;align-items:center;gap:16px;border:none;background:#1c1f24;color:#fff;border-radius:14px;padding:18px 20px;cursor:pointer;text-align:left;font-family:inherit;flex-wrap:wrap;" style-hover="background:#2a2e34;">
+            <div style="width:48px;height:48px;border-radius:12px;background:#3d7ea6;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:15px;flex-shrink:0;">x=4</div>
+            <div style="flex:1;min-width:160px;">
+              <div style="font-size:12px;font-weight:700;color:#c4c8ce;">Continue learning · Maths, Chapter 2</div>
+              <div style="font-size:19px;font-weight:800;margin-top:2px;">Linear Equations</div>
+              <div style="font-size:13px;color:#d4d7dc;margin-top:4px;">Learn → Practice → Test</div>
+            </div>
+            <span style="background:#fff;color:#1c1f24;border-radius:20px;padding:9px 18px;font-size:13px;font-weight:800;">Start</span>
+          </button>
+          <sc-for list="{{ assignmentRows }}" as="a" hint-placeholder-count="3">
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:14px;">
+              <div style="width:38px;height:38px;border-radius:8px;background:{{ a.color }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;">{{ a.icon }}</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:11px;color:#2f6fde;font-weight:600;">{{ a.kind }} · Due {{ a.due }}</div>
+                <div style="font-size:13px;font-weight:700;margin-top:2px;">{{ a.title }}</div>
+                <div style="font-size:11px;color:#8a9099;margin-top:2px;"># {{ a.circleName }}</div>
+              </div>
+              <button onClick="{{ a.toggle }}" style="border:1px solid {{ a.btnBorder }};background:{{ a.btnBg }};color:{{ a.btnFg }};border-radius:6px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;">{{ a.btnLabel }}</button>
+            </div>
+          </sc-for>
+        </sc-if>
+
+        <sc-if value="{{ isLesson }}" hint-placeholder-val="{{ false }}">
+          <div style="position:sticky;top:0;z-index:5;background:#f3f4f6;padding:4px 0 12px;display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+              <button onClick="{{ backToClasswork }}" style="background:#fff;border:1px solid #e0e3e7;color:#1c1f24;border-radius:20px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:#f7f8fa;">← Classwork</button>
+              <div style="flex:1;min-width:180px;">
+                <div style="font-size:12px;font-weight:700;color:#3d7ea6;">Maths · Chapter 2</div>
+                <div style="font-size:24px;font-weight:800;line-height:1.2;">Linear Equations</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:4px;background:#e6e8eb;border-radius:14px;padding:4px;">
+              <sc-for list="{{ lessonTabs }}" as="lt" hint-placeholder-count="3">
+                <button onClick="{{ lt.go }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:10px;padding:11px 8px;background:{{ lt.bg }};color:{{ lt.fg }};box-shadow:{{ lt.shadow }};font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;">
+                  <span style="width:22px;height:22px;border-radius:50%;background:{{ lt.numBg }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">{{ lt.num }}</span>{{ lt.label }}
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <sc-if value="{{ isLearn }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:19px;font-weight:800;display:flex;align-items:center;gap:10px;"><span style="width:28px;height:28px;border-radius:50%;background:#e8effc;color:#2f6fde;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>What is a linear equation?</div>
+              <p style="font-size:15px;line-height:1.6;color:#3d434b;margin:0;text-wrap:pretty;">An <b>equation</b> says two things are equal. A <b>linear equation</b> has a letter (like <b>x</b>) that stands for a number we don't know yet. The x is never squared or multiplied by another letter.</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:16px;background:#e8f6ee;color:#1e7a45;border-radius:8px;padding:8px 12px;">2x + 3 = 11 ✓</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:16px;background:#e8f6ee;color:#1e7a45;border-radius:8px;padding:8px 12px;">x − 5 = 2 ✓</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:16px;background:#fdecec;color:#b42318;border-radius:8px;padding:8px 12px;">x² = 9 ✗</span>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:19px;font-weight:800;display:flex;align-items:center;gap:10px;"><span style="width:28px;height:28px;border-radius:50%;background:#e8effc;color:#2f6fde;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>Think of a balance scale</div>
+              <p style="font-size:15px;line-height:1.6;color:#3d434b;margin:0;text-wrap:pretty;">Both sides of the = sign must stay balanced. <b>Whatever you do to one side, do the same to the other side.</b></p>
+              <div style="display:flex;flex-direction:column;align-items:center;padding:12px 0 4px;">
+                <div style="display:flex;width:100%;max-width:440px;justify-content:space-around;align-items:flex-end;">
+                  <div style="display:flex;gap:6px;"><span style="font-family:'JetBrains Mono',monospace;width:44px;height:44px;border-radius:8px;background:#3d7ea6;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;">x</span><span style="font-family:'JetBrains Mono',monospace;width:44px;height:44px;border-radius:8px;background:#3d7ea6;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;">x</span><span style="font-family:'JetBrains Mono',monospace;width:44px;height:44px;border-radius:8px;background:#d4a24c;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;">3</span></div>
+                  <div style="display:flex;gap:6px;"><span style="font-family:'JetBrains Mono',monospace;width:56px;height:44px;border-radius:8px;background:#d4a24c;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;">11</span></div>
+                </div>
+                <div style="width:100%;max-width:440px;height:6px;border-radius:3px;background:#1c1f24;margin-top:6px;"></div>
+                <div style="width:0;height:0;border-left:22px solid transparent;border-right:22px solid transparent;border-bottom:34px solid #1c1f24;"></div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#5b616a;margin-top:10px;">x + x + 3 = 11</div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:19px;font-weight:800;display:flex;align-items:center;gap:10px;"><span style="width:28px;height:28px;border-radius:50%;background:#e8effc;color:#2f6fde;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>Solve it step by step</div>
+              <p style="font-size:15px;line-height:1.6;color:#3d434b;margin:0;text-wrap:pretty;">Our goal: get <b>x</b> alone on one side.</p>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">2x + 3 = 11</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Start here</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">2x + 3 − 3 = 11 − 3</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Take away 3 from both sides</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">2x = 8</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Now it's simpler</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">2x ÷ 2 = 8 ÷ 2</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Divide both sides by 2</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#e8f6ee;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:#1e7a45;">x = 4</span>
+                  <span style="font-size:13px;color:#1e7a45;font-weight:700;">Answer!</span>
+                </div>
+              </div>
+              <div style="font-size:14px;color:#3d434b;background:#f7f8fa;border-radius:10px;padding:12px 14px;"><b>Check:</b> put 4 back in → <span style="font-family:'JetBrains Mono',monospace;">2 × 4 + 3 = 11</span> ✓</div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:19px;font-weight:800;display:flex;align-items:center;gap:10px;"><span style="width:28px;height:28px;border-radius:50%;background:#e8effc;color:#2f6fde;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</span>When x is on both sides</div>
+              <p style="font-size:15px;line-height:1.6;color:#3d434b;margin:0;text-wrap:pretty;">First move all the x's to one side, then the numbers to the other.</p>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">5x − 4 = 3x + 6</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Start here</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">5x − 3x − 4 = 6</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Take away 3x from both sides</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">2x = 10</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Add 4 to both sides</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#e8f6ee;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:#1e7a45;">x = 5</span>
+                  <span style="font-size:13px;color:#1e7a45;font-weight:700;">Divide both sides by 2</span>
+                </div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:19px;font-weight:800;display:flex;align-items:center;gap:10px;"><span style="width:28px;height:28px;border-radius:50%;background:#e8effc;color:#2f6fde;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</span>Use it in real life</div>
+              <p style="font-size:15px;line-height:1.6;color:#3d434b;margin:0;text-wrap:pretty;"><b>Riya is 3 times as old as her brother. Their ages add up to 32. How old is her brother?</b></p>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">x</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Brother's age (we don't know it yet)</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">3x</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Riya's age</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">x + 3x = 32</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Ages add up to 32</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#f7f8fa;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;color:#1c1f24;">4x = 32</span>
+                  <span style="font-size:13px;color:#5b616a;font-weight:500;">Add the x’s together</span>
+                </div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:10px 14px;border-radius:10px;background:#e8f6ee;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:#1e7a45;">x = 8</span>
+                  <span style="font-size:13px;color:#1e7a45;font-weight:700;">Brother is 8, Riya is 24</span>
+                </div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:19px;font-weight:800;display:flex;align-items:center;gap:10px;">Remember</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+                <div style="background:#f7f8fa;border-radius:10px;padding:14px;font-size:14px;line-height:1.5;"><b>Keep it balanced.</b> Same change on both sides.</div>
+                <div style="background:#f7f8fa;border-radius:10px;padding:14px;font-size:14px;line-height:1.5;"><b>Do the opposite.</b> + becomes −, × becomes ÷.</div>
+                <div style="background:#f7f8fa;border-radius:10px;padding:14px;font-size:14px;line-height:1.5;"><b>Always check.</b> Put your answer back in.</div>
+              </div>
+            </div>
+            <button onClick="{{ goPractice }}" style="align-self:flex-end;border:none;background:#2f6fde;color:#fff;border-radius:24px;padding:13px 24px;font-size:15px;font-weight:800;cursor:pointer;" style-hover="background:#1f55b3;">I'm ready — Practice →</button>
+          </sc-if>
+
+          <sc-if value="{{ isPractice }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:16px 18px;">
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:800;">Find x in each one</div>
+                <div style="font-size:13px;color:#5b616a;margin-top:2px;">Type your answer and tap Check. Stuck? Open the hint.</div>
+              </div>
+              <div style="text-align:right;"><div style="font-size:20px;font-weight:800;">{{ practiceScore }}</div><div style="font-size:12px;color:#6b7280;">correct</div></div>
+            </div>
+            <sc-for list="{{ practiceRows }}" as="q" hint-placeholder-count="5">
+              <div style="background:#fff;border:2px solid {{ q.border }};border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                  <span style="font-size:12px;font-weight:800;color:#6b7280;">Q{{ q.n }}</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:22px;flex:1;min-width:160px;">{{ q.q }}</span>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:18px;">x =</span>
+                    <input value="{{ q.val }}" onChange="{{ q.onInput }}" onKeyDown="{{ q.onKey }}" inputmode="numeric" placeholder="?" style="font-family:'JetBrains Mono',monospace;width:76px;font-size:18px;padding:9px 10px;border:1px solid #d8dce2;border-radius:10px;outline:none;text-align:center;"></input>
+                    <button onClick="{{ q.check }}" style="border:none;background:#1c1f24;color:#fff;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:700;cursor:pointer;">Check</button>
+                  </div>
+                </div>
+                <sc-if value="{{ q.showResult }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:{{ q.fbBg }};color:{{ q.fbFg }};border-radius:10px;padding:10px 14px;font-size:14px;font-weight:700;">{{ q.fbText }}</div>
+                </sc-if>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <button onClick="{{ q.toggleHint }}" style="align-self:flex-start;border:none;background:none;color:#2f6fde;font-size:13px;font-weight:700;cursor:pointer;padding:0;">{{ q.hintLabel }}</button>
+                  <sc-if value="{{ q.showHint }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;color:#3d434b;background:#fdf6e7;border-radius:10px;padding:10px 14px;">{{ q.hint }}</div></sc-if>
+                </div>
+              </div>
+            </sc-for>
+            <button onClick="{{ goTest }}" style="align-self:flex-end;border:none;background:#2f6fde;color:#fff;border-radius:24px;padding:13px 24px;font-size:15px;font-weight:800;cursor:pointer;" style-hover="background:#1f55b3;">Take the test →</button>
+          </sc-if>
+
+          <sc-if value="{{ isTest }}" hint-placeholder-val="{{ false }}">
+            <sc-if value="{{ tSubmitted }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#1c1f24;color:#fff;border-radius:14px;padding:22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+                <div style="font-size:40px;font-weight:800;">{{ scoreLabel }}</div>
+                <div style="flex:1;min-width:180px;"><div style="font-size:18px;font-weight:800;">{{ scoreMsg }}</div><div style="font-size:13px;color:#c4c8ce;margin-top:4px;">Green shows the right answer. Read the reason under each question.</div></div>
+                <button onClick="{{ retake }}" style="border:none;background:#fff;color:#1c1f24;border-radius:20px;padding:10px 18px;font-size:14px;font-weight:800;cursor:pointer;">Try again</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+              <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+                <div style="flex:1;"><div style="font-size:15px;font-weight:800;">Chapter test · 5 questions</div><div style="font-size:13px;color:#5b616a;margin-top:2px;">Pick one answer for each. No hints here — you've got this!</div></div>
+                <div style="text-align:right;"><div style="font-size:20px;font-weight:800;">{{ tAnsweredLabel }}</div><div style="font-size:12px;color:#6b7280;">answered</div></div>
+              </div>
+            </sc-if>
+            <sc-for list="{{ testRows }}" as="t" hint-placeholder-count="5">
+              <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+                <div style="display:flex;gap:10px;"><span style="font-size:12px;font-weight:800;color:#6b7280;padding-top:3px;">Q{{ t.n }}</span><span style="font-size:16px;font-weight:700;line-height:1.45;">{{ t.q }}</span></div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;">
+                  <sc-for list="{{ t.opts }}" as="o" hint-placeholder-count="4">
+                    <button onClick="{{ o.pick }}" style="display:flex;align-items:center;gap:10px;border:2px solid {{ o.bd }};background:{{ o.bg }};border-radius:10px;padding:11px 12px;cursor:pointer;text-align:left;font-family:inherit;">
+                      <span style="width:24px;height:24px;border-radius:50%;background:#f1f3f5;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#1c1f24;">{{ o.letter }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#1c1f24;">{{ o.label }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ t.showWhy }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;color:#3d434b;background:#f7f8fa;border-radius:10px;padding:10px 14px;"><b>Why:</b> {{ t.why }}</div></sc-if>
+              </div>
+            </sc-for>
+            <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ submitTest }}" style="align-self:flex-end;border:none;background:{{ submitBg }};color:#fff;border-radius:24px;padding:13px 26px;font-size:15px;font-weight:800;cursor:pointer;">Submit test</button>
+            </sc-if>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ isWelcome }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-weight:800;font-size:26px;">Welcome to Agna School</div>
+            <p style="font-size:15px;line-height:1.55;color:#3d434b;margin:0;max-width:600px;text-wrap:pretty;">Your place to learn, share what you make, and try new things. Here's how it works in 5 steps.</p>
+          </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+              <div style="background:#f3f4f6;padding:14px;display:flex;align-items:center;"><img src="{{ shots.home }}" alt="Home: see what everyone is sharing" style="width:100%;display:block;border-radius:8px;border:1px solid #e6e8eb;box-shadow:0 4px 14px rgba(0,0,0,.08);"></img></div>
+              <div style="padding:22px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+                <div style="width:32px;height:32px;border-radius:50%;background:#1c1f24;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;">1</div>
+                <div style="font-size:19px;font-weight:800;">Home: see what everyone is sharing</div>
+                <div style="font-size:14px;line-height:1.55;color:#3d434b;text-wrap:pretty;">Scroll the feed to see posts. Tap the heart to like, the bubble to comment, and the bookmark to save. Tap a circle at the top to see only that topic.</div>
+                <button onClick="{{ nav.home.go }}" style="align-self:flex-start;border:none;background:#f1f3f5;color:#1c1f24;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:#e6e8eb;">Go to Home →</button>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+              <div style="background:#f3f4f6;padding:14px;display:flex;align-items:center;"><img src="{{ shots.post }}" alt="Share your own post" style="width:100%;display:block;border-radius:8px;border:1px solid #e6e8eb;box-shadow:0 4px 14px rgba(0,0,0,.08);"></img></div>
+              <div style="padding:22px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+                <div style="width:32px;height:32px;border-radius:50%;background:#1c1f24;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;">2</div>
+                <div style="font-size:19px;font-weight:800;">Share your own post</div>
+                <div style="font-size:14px;line-height:1.55;color:#3d434b;text-wrap:pretty;">Type in the box at the top of Home, choose a circle like Science Lab or Art Studio, then tap Post.</div>
+                <button onClick="{{ nav.home.go }}" style="align-self:flex-start;border:none;background:#f1f3f5;color:#1c1f24;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:#e6e8eb;">Write a post →</button>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+              <div style="background:#f3f4f6;padding:14px;display:flex;align-items:center;"><img src="{{ shots.classwork }}" alt="Classwork: homework and chapters" style="width:100%;display:block;border-radius:8px;border:1px solid #e6e8eb;box-shadow:0 4px 14px rgba(0,0,0,.08);"></img></div>
+              <div style="padding:22px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+                <div style="width:32px;height:32px;border-radius:50%;background:#1c1f24;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;">3</div>
+                <div style="font-size:19px;font-weight:800;">Classwork: homework and chapters</div>
+                <div style="font-size:14px;line-height:1.55;color:#3d434b;text-wrap:pretty;">See what is due and tap Mark done when you finish. On the right, open a subject to see its chapters and tick off the ones you have studied.</div>
+                <button onClick="{{ nav.classwork.go }}" style="align-self:flex-start;border:none;background:#f1f3f5;color:#1c1f24;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:#e6e8eb;">Open Classwork →</button>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+              <div style="background:#f3f4f6;padding:14px;display:flex;align-items:center;"><img src="{{ shots.launchpad }}" alt="Launchpad: try something new" style="width:100%;display:block;border-radius:8px;border:1px solid #e6e8eb;box-shadow:0 4px 14px rgba(0,0,0,.08);"></img></div>
+              <div style="padding:22px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+                <div style="width:32px;height:32px;border-radius:50%;background:#1c1f24;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;">4</div>
+                <div style="font-size:19px;font-weight:800;">Launchpad: try something new</div>
+                <div style="font-size:14px;line-height:1.55;color:#3d434b;text-wrap:pretty;">Pick a topic card to see how to start, free lessons, what to buy and how much it costs. Tap Next topic to keep exploring.</div>
+                <button onClick="{{ nav.launchpad.go }}" style="align-self:flex-start;border:none;background:#f1f3f5;color:#1c1f24;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:#e6e8eb;">Explore Launchpad →</button>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+              <div style="background:#f3f4f6;padding:14px;display:flex;align-items:center;"><img src="{{ shots.voice }}" alt="Voice rooms: talk and study together" style="width:100%;display:block;border-radius:8px;border:1px solid #e6e8eb;box-shadow:0 4px 14px rgba(0,0,0,.08);"></img></div>
+              <div style="padding:22px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+                <div style="width:32px;height:32px;border-radius:50%;background:#1c1f24;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;">5</div>
+                <div style="font-size:19px;font-weight:800;">Voice rooms: talk and study together</div>
+                <div style="font-size:14px;line-height:1.55;color:#3d434b;text-wrap:pretty;">Tap Join next to a room on the left. Use the buttons at the bottom to mute, turn on your camera, share your screen or raise your hand. Tap the red button to leave.</div>
+                <button onClick="{{ nav.home.go }}" style="align-self:flex-start;border:none;background:#f1f3f5;color:#1c1f24;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:#e6e8eb;">Back to Home →</button>
+              </div>
+            </div>
+          <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:17px;font-weight:800;">Our rules</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5;">
+              <div>1. Be kind and respectful to everyone.</div>
+              <div>2. Post in the circle that fits your topic.</div>
+              <div>3. Give credit when you share someone else's work.</div>
+              <div>4. Ask for help. That's what this place is for.</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isEvents }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="font-weight:800;font-size:24px;">Events</div>
+            <div style="font-size:14px;color:#5b616a;">Real events and contests in Chennai, Bengaluru and online.</div>
+          </div>
+          <div style="display:flex;gap:4px;background:#e6e8eb;border-radius:14px;padding:4px;">
+            <sc-for list="{{ evTabs }}" as="t" hint-placeholder-count="3">
+              <button onClick="{{ t.go }}" style="flex:1;border:none;border-radius:10px;padding:10px 6px;background:{{ t.bg }};color:{{ t.fg }};box-shadow:{{ t.shadow }};font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;">{{ t.label }}<span style="font-size:11px;font-weight:700;background:{{ t.countBg }};border-radius:10px;padding:1px 7px;">{{ t.count }}</span></button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <sc-for list="{{ evCities }}" as="c" hint-placeholder-count="4">
+              <button onClick="{{ c.go }}" style="border:1px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }};border-radius:20px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;">{{ c.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ evEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px dashed #d8dce2;border-radius:14px;padding:28px;text-align:center;font-size:14px;color:#5b616a;">Nothing here for this city yet. Try another one.</div>
+          </sc-if>
+          <sc-for list="{{ evRows }}" as="e" hint-placeholder-count="4">
+            <div style="background:#fff;border:1px solid #e6e8eb;border-radius:14px;padding:16px;display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:60px;flex-shrink:0;border-radius:10px;background:{{ e.tint }};text-align:center;padding:8px 4px;">
+                <div style="font-size:11px;font-weight:800;color:{{ e.color }};letter-spacing:.5px;">{{ e.mon }}</div>
+                <div style="font-size:{{ e.daySize }};font-weight:800;line-height:1.2;color:#1c1f24;white-space:nowrap;">{{ e.day }}</div>
+              </div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <span style="font-size:11px;font-weight:700;color:{{ e.color }};background:{{ e.tint }};border-radius:10px;padding:2px 8px;">{{ e.type }}</span>
+                  <span style="font-size:11px;font-weight:700;color:#3d434b;background:#f1f3f5;border-radius:10px;padding:2px 8px;">{{ e.city }}</span>
+                  <sc-if value="{{ e.hasDeadline }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:700;color:{{ e.dlFg }};background:{{ e.dlBg }};border-radius:10px;padding:2px 8px;">{{ e.deadline }}</span></sc-if>
+                </div>
+                <div style="font-size:16px;font-weight:800;line-height:1.3;">{{ e.title }}</div>
+                <div style="font-size:12px;color:#6b7280;">{{ e.when }} · {{ e.org }}</div>
+                <div style="font-size:14px;line-height:1.5;color:#3d434b;text-wrap:pretty;">{{ e.what }}</div>
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px;">
+                  <span style="font-size:12px;font-weight:700;color:#1e7a45;background:#e8f6ee;border-radius:10px;padding:3px 9px;">{{ e.cost }}</span>
+                  <sc-if value="{{ e.hasWho }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;color:#3d434b;">{{ e.who }}</span></sc-if>
+                  <div style="flex:1;"></div>
+                  <button onClick="{{ e.remind }}" style="border:1px solid {{ e.rBd }};background:{{ e.rBg }};color:{{ e.rFg }};border-radius:18px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;">{{ e.rLabel }}</button>
+                  <a href="{{ e.url }}" target="_blank" rel="noopener" style="background:#1c1f24;color:#fff;border-radius:18px;padding:8px 14px;font-size:12px;font-weight:700;text-decoration:none;" style-hover="background:#2f3439;color:#fff;text-decoration:none;">Visit site ↗</a>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+          <div style="font-size:12px;color:#8a9099;">Dates come from official sites and can change. Always check the link and go with a grown-up.</div>
+        </sc-if>
+        <sc-if value="{{ isCall }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#16181b;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px;min-height:calc(100vh - 120px);">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9aa0a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"></path><path d="M16 9a4 4 0 0 1 0 6"></path></svg>
+              <span style="color:#fff;font-weight:700;font-size:14px;">{{ voiceName }}</span>
+              <span style="color:#9aa0a6;font-size:12px;">· {{ tileCount }} in room</span>
+              <div style="flex:1;"></div>
+              <button onClick="{{ goFeed }}" style="border:none;background:#26292e;color:#d4d7dc;border-radius:6px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;" style-hover="background:#30343a;">Back to feed</button>
+            </div>
+            <sc-if value="{{ presenting }}" hint-placeholder-val="{{ false }}">
+              <div style="aspect-ratio:16/8;border-radius:10px;background:repeating-linear-gradient(135deg,#1f2226 0 10px,#24272c 10px 20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-shadow:0 0 0 2px #2f6fde;position:relative;overflow:hidden;">
+                <live-video stream="{{ screenStream }}" fit="contain" label="screen share"></live-video>
+                <div style="position:relative;color:#fff;font-size:15px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.6);">You're presenting your screen</div>
+                <button onClick="{{ togglePresent }}" style="position:relative;border:none;background:#e5484d;color:#fff;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;">Stop presenting</button>
+              </div>
+            </sc-if>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;flex:1;align-content:start;">
+              <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="3">
+                <div style="position:relative;aspect-ratio:16/10;border-radius:10px;background:{{ t.bg }};box-shadow:{{ t.ring }};display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                  <sc-if value="{{ t.showAvatar }}" hint-placeholder-val="{{ true }}"><div style="width:60px;height:60px;border-radius:50%;background:{{ t.color }};color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ t.initials }}</div></sc-if>
+                  <sc-if value="{{ t.cam }}" hint-placeholder-val="{{ false }}"><live-video stream="{{ t.stream }}" mirror="{{ t.isMe }}" label="camera feed"></live-video></sc-if>
+                  <div style="position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;display:flex;align-items:center;gap:5px;">{{ t.name }}<sc-if value="{{ t.muted }}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path><line x1="4" y1="4" x2="20" y2="20"></line></svg></sc-if></div>
+                  <sc-if value="{{ t.hand }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:8px;right:8px;background:#d4a24c;color:#1c1f24;font-size:10px;font-weight:700;padding:3px 7px;border-radius:5px;">Hand raised</div></sc-if>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;padding-top:4px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                <button onClick="{{ toggleMute }}" style="width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;background:{{ ctrl.mute.bg }};color:{{ ctrl.mute.fg }};display:flex;align-items:center;justify-content:center;">
+                  <sc-if value="{{ muted }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path><line x1="4" y1="4" x2="20" y2="20"></line></svg></sc-if>
+                  <sc-if value="{{ unmuted }}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></sc-if>
+                </button>
+                <span style="font-size:10px;color:#9aa0a6;">{{ ctrl.mute.label }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                <button onClick="{{ toggleCam }}" style="width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;background:{{ ctrl.cam.bg }};color:{{ ctrl.cam.fg }};display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="M16 10l5-3v10l-5-3z"></path></svg></button>
+                <span style="font-size:10px;color:#9aa0a6;">{{ ctrl.cam.label }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                <button onClick="{{ togglePresent }}" style="width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;background:{{ ctrl.pres.bg }};color:{{ ctrl.pres.fg }};display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg></button>
+                <span style="font-size:10px;color:#9aa0a6;">{{ ctrl.pres.label }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                <button onClick="{{ toggleHand }}" style="width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;background:{{ ctrl.hand.bg }};color:{{ ctrl.hand.fg }};display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5a1.5 1.5 0 0 1 3 0v6M11 11V4a1.5 1.5 0 0 1 3 0v7M14 11V5.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-3l-2-4a1.5 1.5 0 0 1 2.5-1.5L8 13"></path></svg></button>
+                <span style="font-size:10px;color:#9aa0a6;">{{ ctrl.hand.label }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                <button onClick="{{ toggleDeafen }}" style="width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;background:{{ ctrl.deaf.bg }};color:{{ ctrl.deaf.fg }};display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"></path><rect x="3" y="14" width="4" height="6" rx="1.5"></rect><rect x="17" y="14" width="4" height="6" rx="1.5"></rect></svg></button>
+                <span style="font-size:10px;color:#9aa0a6;">{{ ctrl.deaf.label }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                <button onClick="{{ leave }}" style="width:64px;height:48px;border-radius:24px;border:none;cursor:pointer;background:#e5484d;color:#fff;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 15c5-5 13-5 18 0l-2.5 2.5-3-1.5v-2.5a10 10 0 0 0-7 0V16l-3 1.5z"></path></svg></button>
+                <span style="font-size:10px;color:#9aa0a6;">Leave</span>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isLaunchpad }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ noTrack }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="font-size:11px;font-weight:700;color:#2f6fde;letter-spacing:1px;text-transform:uppercase;">Launchpad</div>
+              <div style="font-size:26px;font-weight:800;">What do you want to try?</div>
+              <p style="font-size:14px;color:#5b616a;line-height:1.55;margin:0;max-width:560px;text-wrap:pretty;">Pick anything that looks fun. Each card shows what it costs, how hard it is, and how to start.</p>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <sc-for list="{{ groupChips }}" as="g" hint-placeholder-count="7">
+                <button onClick="{{ g.select }}" style="border:1px solid {{ g.border }};background:{{ g.bg }};color:{{ g.fg }};border-radius:20px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;">{{ g.label }} <span style="opacity:.7;">{{ g.count }}</span></button>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;">
+              <sc-for list="{{ trackRows }}" as="t" hint-placeholder-count="6">
+                <div onClick="{{ t.open }}" style="min-height:250px;border-radius:12px;overflow:hidden;cursor:pointer;background-color:{{ t.color }};background-image:{{ t.bgImage }};background-size:cover;background-position:center;display:flex;flex-direction:column;justify-content:space-between;padding:12px;color:#fff;transition:transform .15s, box-shadow .15s;" style-hover="transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.18);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
+                    <span style="background:{{ t.color }};color:#fff;font-size:10px;font-weight:700;padding:4px 9px;border-radius:12px;">{{ t.groupName }}</span>
+                    <sc-if value="{{ t.joined }}" hint-placeholder-val="{{ false }}"><span style="background:#fff;color:#1e8a4c;font-size:10px;font-weight:700;padding:4px 9px;border-radius:12px;">Joined ✓</span></sc-if>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:6px;">
+                    <div style="font-size:18px;font-weight:800;line-height:1.2;text-wrap:balance;">{{ t.title }}</div>
+                    <div style="font-size:12px;line-height:1.45;color:#eef0f2;text-wrap:pretty;">{{ t.what }}</div>
+                    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;">
+                      <span style="background:rgba(0,0,0,.55);font-size:10px;font-weight:700;padding:4px 8px;border-radius:6px;">{{ t.budget }}</span>
+                      <span style="background:rgba(0,0,0,.55);font-size:10px;font-weight:700;padding:4px 8px;border-radius:6px;">{{ t.level }}</span>
+                      <span style="background:rgba(0,0,0,.55);font-size:10px;font-weight:700;padding:4px 8px;border-radius:6px;">{{ t.time }}</span>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ hasTrack }}" hint-placeholder-val="{{ false }}">
+            <div style="min-height:280px;border-radius:14px;overflow:hidden;background-color:{{ track.color }};background-image:{{ track.heroImage }};background-size:cover;background-position:center;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:18px 22px 22px;color:#fff;">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+                <button onClick="{{ closeTrack }}" style="border:none;background:rgba(0,0,0,.55);color:#fff;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;">← All topics</button>
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <span style="background:rgba(0,0,0,.55);color:#fff;border-radius:20px;padding:9px 12px;font-size:12px;font-weight:700;">{{ track.posLabel }}</span>
+                  <button onClick="{{ track.goPrev }}" title="Previous topic" style="border:none;background:rgba(0,0,0,.55);color:#fff;border-radius:20px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;">← Back</button>
+                  <button onClick="{{ track.goNext }}" title="Next topic" style="border:none;background:#fff;color:#1c1f24;border-radius:20px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;">Next topic →</button>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;max-width:620px;">
+                <span style="align-self:flex-start;background:{{ track.color }};font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px;">{{ track.groupName }}</span>
+                <div style="font-size:30px;font-weight:800;line-height:1.15;text-wrap:balance;">{{ track.title }}</div>
+                <div style="font-size:15px;line-height:1.5;color:#f1f3f5;text-wrap:pretty;">{{ track.what }}</div>
+                <div style="font-size:11px;color:#d4d7dc;">Also called: {{ track.term }}</div>
+                <button onClick="{{ track.toggleJoin }}" style="align-self:flex-start;margin-top:8px;border:none;background:{{ track.btnBg }};color:{{ track.btnFg }};border-radius:20px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;">{{ track.btnLabel }}</button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;">
+              <sc-for list="{{ track.facts }}" as="f" hint-placeholder-count="5">
+                <div style="background:#fff;border:1px solid #e6e8eb;border-radius:10px;padding:12px 14px;">
+                  <div style="font-size:11px;font-weight:700;color:#6b7280;">{{ f.label }}</div>
+                  <div style="font-size:15px;font-weight:800;margin-top:4px;color:{{ f.color }};">{{ f.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start;">
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <div style="background:#fff;border:1px solid #e6e8eb;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+                  <div style="font-size:15px;font-weight:800;">Start here</div>
+                  <sc-for list="{{ track.steps }}" as="st" hint-placeholder-count="3">
+                    <div style="display:flex;gap:12px;align-items:flex-start;">
+                      <span style="width:26px;height:26px;border-radius:50%;background:{{ track.color }};color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ st.n }}</span>
+                      <span style="font-size:14px;line-height:1.5;padding-top:2px;">{{ st.text }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="background:#fff;border:1px solid #e6e8eb;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+                  <div style="font-size:15px;font-weight:800;">Learn for free</div>
+                  <sc-for list="{{ track.learnRows }}" as="r" hint-placeholder-count="2">
+                    <a href="{{ r.url }}" target="_blank" rel="noopener" style="display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid #eceef1;border-radius:8px;color:#1c1f24;text-decoration:none;" style-hover="background:#f7f8fa;">
+                      <div style="flex:1;min-width:0;">
+                        <div style="font-size:13px;font-weight:700;">{{ r.name }}</div>
+                        <div style="font-size:12px;color:#5b616a;margin-top:2px;">{{ r.what }}</div>
+                      </div>
+                      <span style="font-size:10px;font-weight:700;color:#1e8a4c;background:#e8f6ee;padding:3px 8px;border-radius:10px;">Free</span>
+                      <span style="color:#8a9099;">↗</span>
+                    </a>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <div style="background:#fff;border:1px solid #e6e8eb;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+                  <div style="font-size:15px;font-weight:800;">What you'll need to buy</div>
+                  <sc-if value="{{ track.hasBuy }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;flex-direction:column;">
+                      <sc-for list="{{ track.buyRows }}" as="b" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f1f3;">
+                          <span style="flex:1;font-size:13px;">{{ b.item }}</span>
+                          <span style="font-size:10px;font-weight:700;background:{{ b.tagBg }};color:{{ b.tagFg }};padding:3px 8px;border-radius:10px;">{{ b.tag }}</span>
+                          <span style="font-size:13px;font-weight:700;min-width:96px;text-align:right;">{{ b.price }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ track.noBuy }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:13px;color:#5b616a;">Nothing! A school or home computer is enough.</div>
+                  </sc-if>
+                  <div style="display:flex;justify-content:space-between;align-items:center;background:#f5f6f8;border-radius:8px;padding:12px 14px;">
+                    <span style="font-size:13px;font-weight:700;">Total to get started</span>
+                    <span style="font-size:17px;font-weight:800;">{{ track.budget }}</span>
+                  </div>
+                  <div style="font-size:11px;color:#8a9099;">Prices are rough guides in Indian rupees. Always ask a parent before buying.</div>
+                </div>
+                <div style="background:#fff;border:1px solid #e6e8eb;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+                  <div style="font-size:15px;font-weight:800;">Stay safe</div>
+                  <div style="font-size:13px;line-height:1.5;">{{ track.safe }}</div>
+                </div>
+                <div style="background:#fff;border:1px solid #e6e8eb;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+                  <div style="font-size:15px;font-weight:800;">Where it can take you</div>
+                  <div>
+                    <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:6px;">Skills you'll get</div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;"><sc-for list="{{ track.skills }}" as="sk" hint-placeholder-count="3"><span style="font-size:12px;font-weight:600;background:#f1f3f5;padding:4px 10px;border-radius:12px;">{{ sk }}</span></sc-for></div>
+                  </div>
+                  <div>
+                    <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:6px;">Jobs it can lead to</div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;"><sc-for list="{{ track.jobs }}" as="jb" hint-placeholder-count="2"><span style="font-size:12px;font-weight:600;background:#e3edfc;color:#1f55b3;padding:4px 10px;border-radius:12px;">{{ jb }}</span></sc-for></div>
+                  </div>
+                  <div>
+                    <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:4px;">When you get good</div>
+                    <div style="font-size:13px;line-height:1.5;">{{ track.later }}</div>
+                  </div>
+                  <button onClick="{{ track.discuss }}" style="border:1px solid #d8dce2;background:#fff;border-radius:8px;padding:10px 12px;font-size:13px;font-weight:600;cursor:pointer;text-align:left;" style-hover="background:#f7f8fa;">Ask questions in #{{ track.circleName }} →</button>
+                </div>
+              </div>
+            </div>
+            <button onClick="{{ track.goNext }}" style="display:flex;align-items:center;gap:16px;width:100%;border:none;border-radius:14px;overflow:hidden;cursor:pointer;padding:0;background:#1c1f24;color:#fff;text-align:left;font-family:inherit;">
+              <div style="width:140px;align-self:stretch;min-height:90px;background-color:{{ track.nextColor }};background-image:{{ track.nextImage }};background-size:cover;background-position:center;flex-shrink:0;"></div>
+              <div style="flex:1;padding:16px 0;">
+                <div style="font-size:11px;font-weight:700;color:#c4c8ce;text-transform:uppercase;letter-spacing:.5px;">Up next</div>
+                <div style="font-size:18px;font-weight:800;margin-top:3px;">{{ track.nextTitle }}</div>
+              </div>
+              <span style="padding:0 22px;font-size:24px;">→</span>
+            </button>
+          </sc-if>
+        </sc-if>
+      </main>
+
+      <sc-if value="{{ showRail }}" hint-placeholder-val="{{ true }}">
+      <aside style="flex:0 1 260px;min-width:220px;display:flex;flex-direction:column;gap:28px;position:sticky;top:24px;">
+        <div>
+          <div style="font-weight:700;font-size:13px;margin-bottom:12px;">Announcements</div>
+          <div style="padding:4px 0 14px;border-bottom:1px solid #e6e8eb;display:flex;flex-direction:column;gap:12px;">
+            <div><div style="font-size:12px;font-weight:600;">Hub Guidelines</div><div style="font-size:10px;color:#8a9099;margin-top:2px;">Mon, Nov 9, 2026 4:35 PM</div></div>
+            <div><div style="font-size:12px;font-weight:600;">Science Fair sign-ups open</div><div style="font-size:10px;color:#8a9099;margin-top:2px;">Fri, Nov 13, 2026 9:00 AM</div></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div style="font-weight:700;font-size:13px;">Due Soon</div>
+            <a onClick="{{ goAssignments }}" style="font-size:11px;color:#5b616a;cursor:pointer;">See all</a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <sc-for list="{{ dueSoon }}" as="a" hint-placeholder-count="3">
+              <div>
+                <div style="font-size:10px;color:#2f6fde;font-weight:600;margin-bottom:5px;">◷ Due by {{ a.due }}</div>
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <div style="width:56px;height:38px;border-radius:4px;background:{{ a.color }};flex-shrink:0;"></div>
+                  <div style="font-size:12px;line-height:1.35;">{{ a.title }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </aside>
+      </sc-if>
+
+      <sc-if value="{{ isAssignments }}" hint-placeholder-val="{{ false }}">
+      <aside style="flex:1 1 250px;max-width:340px;min-width:230px;display:flex;flex-direction:column;gap:12px;position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;padding-bottom:8px;">
+        <div>
+          <div style="font-weight:800;font-size:18px;">Subjects & chapters</div>
+          <div style="font-size:13px;color:#6b7280;margin-top:4px;">Tap a subject, then tick chapters you've finished.</div>
+        </div>
+        <sc-for list="{{ subjectRows }}" as="sb" hint-placeholder-count="5">
+          <div style="background:#fff;border:1px solid #e6e8eb;border-radius:12px;overflow:hidden;flex-shrink:0;">
+            <button onClick="{{ sb.toggle }}" style="display:flex;width:100%;align-items:center;gap:12px;padding:12px 14px;border:none;background:none;cursor:pointer;text-align:left;font-family:inherit;color:#1c1f24;" style-hover="background:#f7f8fa;">
+              <div style="width:36px;height:36px;border-radius:10px;background:{{ sb.color }};color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">{{ sb.initial }}</div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;justify-content:space-between;gap:8px;"><span style="display:flex;align-items:center;gap:6px;min-width:0;"><span style="font-size:14px;font-weight:700;">{{ sb.name }}</span><span style="font-size:10px;font-weight:700;color:#5b616a;background:#f1f3f5;border-radius:10px;padding:2px 7px;white-space:nowrap;">Class {{ sb.level }}</span></span><span style="font-size:12px;color:#6b7280;">{{ sb.progress }}</span></div>
+                <div style="height:6px;border-radius:3px;background:#eef0f2;overflow:hidden;"><div style="height:100%;border-radius:3px;background:{{ sb.color }};width:{{ sb.pct }};"></div></div>
+              </div>
+              <span style="font-size:14px;color:#6b7280;transform:{{ sb.chev }};transition:transform .15s;">›</span>
+            </button>
+            <sc-if value="{{ sb.open }}" hint-placeholder-val="{{ false }}">
+              <div style="border-top:1px solid #f0f1f3;padding:6px;display:flex;flex-direction:column;">
+                <sc-for list="{{ sb.chapters }}" as="ch" hint-placeholder-count="5">
+                  <div style="display:flex;align-items:center;gap:4px;border-radius:8px;background:{{ ch.rowBg }};">
+                    <button onClick="{{ ch.toggle }}" title="Mark finished" style="border:none;background:none;cursor:pointer;padding:9px 4px 9px 8px;display:flex;"><span style="width:20px;height:20px;border-radius:50%;border:2px solid {{ ch.boxBorder }};background:{{ ch.boxBg }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">{{ ch.mark }}</span></button>
+                    <button onClick="{{ ch.open }}" style="flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:9px 8px 9px 4px;border:none;background:none;border-radius:8px;cursor:pointer;text-align:left;font-family:inherit;" style-hover="background:#f7f8fa;">
+                      <span style="font-size:12px;color:#8a9099;width:34px;flex-shrink:0;">Ch {{ ch.n }}</span>
+                      <span style="flex:1;min-width:0;font-size:13px;color:{{ ch.fg }};line-height:1.35;font-weight:{{ ch.weight }};">{{ ch.title }}</span>
+                      <span style="font-size:11px;font-weight:700;color:{{ ch.pctFg }};background:{{ ch.pctBg }};border-radius:10px;padding:2px 7px;min-width:40px;text-align:center;flex-shrink:0;">{{ ch.pct }}</span>
+                      <sc-if value="{{ ch.hasLesson }}" hint-placeholder-val="{{ false }}"><span style="color:#2f6fde;font-size:15px;font-weight:800;flex-shrink:0;">→</span></sc-if>
+                    </button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </aside>
+      </sc-if>
+    </div>
+  </div>
+</div>
+<sc-if value="{{ hasToast }}">
+  <div role="status" style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:100;background:#1c1f24;color:#fff;font-size:14px;font-weight:600;padding:12px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:min(92vw,520px);text-align:center;">{{ toast }}</div>
+</sc-if>
+</script>
+
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/react-dom.production.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/media.js"></script>
+<script src="js/data.js"></script>
+<script src="js/landing.js"></script>
+<script src="js/app.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
